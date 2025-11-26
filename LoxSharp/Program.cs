@@ -3,45 +3,76 @@ namespace LoxSharp;
 
 class Program
 {
-    static void Main(string[] args)
+    // Exit codes that the program returns and their ordinal values.
+    enum ExitCode
+    {
+        Ok = 0,
+        InvalidCommandLine = 1,
+        EndOfStream = 2,
+        SyntaxError = 3,
+        FileNotFound = 4,
+    }
+
+    // main entry point
+    static int Main(string[] args)
+    {
+        // call the the implementation that returns an ExitCode and cast it to int
+        // We have to do this, because the runtime expects the entry point to return int
+        return (int)LoxMain(args);
+    }
+
+    private static ExitCode LoxMain(string[] args)
     {
         if (args.Length == 0)
         {
-            RunInteractively();
+            return RunInteractively();
         }
         else if (args.Length == 1)
         {
-            RunFile(args[0]);
+            return RunFile(args[0]);
         }
         else
         {
             Console.WriteLine($"Usage: LoxSharp [file]");
+            return ExitCode.InvalidCommandLine;
         }
     }
 
     private static bool hadError = false;
 
-    private static void RunInteractively()
+    private static ExitCode RunInteractively()
     {
-        while (GetInput() is string line)
-            Run(line);
+        while (true)
+        {
+            Console.Write("> ");
+            string? line = Console.ReadLine();
+            if (line == null)
+                return ExitCode.EndOfStream;
+
+            ExitCode error = Run(line);
+            if (error != ExitCode.Ok)
+                return error;
+        }
     }
 
-    private static string? GetInput()
+    private static ExitCode RunFile(string path)
     {
-        Console.Write("> ");
-        return Console.ReadLine();
+        try
+        {
+            string source = File.ReadAllText(path);
+            return Run(source);
+        }
+        catch (Exception ex) when (ex is FileNotFoundException or DirectoryNotFoundException)
+        {
+            Console.WriteLine($"File {path} not found!");
+            return ExitCode.FileNotFound;
+        }
     }
 
-    private static void RunFile(string path)
-    {
-        string source = File.ReadAllText(path);
-        Run(source);
-    }
-
-    private static void Run(string source)
+    private static ExitCode Run(string source)
     {
         Console.WriteLine(source);
+        return ExitCode.Ok;
     }
 
     private static void OnError(int line, string message)
