@@ -2,8 +2,10 @@ fun sum(a, b) {
     return a + b;
 }
 
+print "Hello, World!"
+
 var foo = 5;
 var bar = 10;
-var baz = sum(foo, bar);
+var baz = 3.14 * sum(foo, bar);
 
 print baz

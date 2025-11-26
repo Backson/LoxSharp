@@ -32,8 +32,8 @@ class Scanner
 
     private void ScanToken()
     {
-        char c = Advance();
-        switch (c)
+        char startingCharacter = Advance();
+        switch (startingCharacter)
         {
             case '(': AddToken(TokenType.LeftParen); break;
             case ')': AddToken(TokenType.RightParen); break;
@@ -52,6 +52,7 @@ class Scanner
             case '/':
                 if (Match('/'))
                 {
+                    // scan a comment until end of line
                     while (!IsAtEnd() && Peek() != '\n')
                         Advance();
                 }
@@ -71,8 +72,49 @@ class Scanner
                 _line++;
                 break;
 
+            case '"':
+                // scan a string literal
+                while (!IsAtEnd())
+                {
+                    char c = Advance();
+
+                    // keep updating the line number
+                    if (c == '\n')
+                        _line++;
+                    
+                    // check for end of string
+                    if (c == '"')
+                    {
+                        AddToken(TokenType.String);
+                        break;
+                    }
+                }
+                // TODO: Error: unterminated string
+                break;
+
             default:
-                // ignore unrecognized character
+                if (IsDigit(startingCharacter))
+                {
+                    // Consume whole-number part
+                    while (IsDigit(Peek())) Advance();
+
+                    // Consume fractional dot
+                    if (Peek() == '.') Advance();
+
+                    if (!IsDigit(Peek()))
+                    {
+                        // TODO: Error: expected digit after fractional dot
+                    }
+
+                    // Consume the fractional part
+                    while (IsDigit(Peek())) Advance();
+
+                    AddToken(TokenType.Number);
+                }
+                else
+                {
+                    // ignore unrecognized character
+                }
                 break;
         }
     }
@@ -123,7 +165,11 @@ class Scanner
 
         // The character matched the expected one
         return true;
+    }
 
+    private static bool IsDigit(char c)
+    {
+        return c >= '0' && c <= '9';
     }
 
     /// <summary>
