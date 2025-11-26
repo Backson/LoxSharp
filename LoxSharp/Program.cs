@@ -19,6 +19,8 @@ class Program
         }
     }
 
+    private static bool hadError = false;
+
     private static void RunInteractively()
     {
         while (GetInput() is string line)
@@ -40,5 +42,16 @@ class Program
     private static void Run(string source)
     {
         Console.WriteLine(source);
+    }
+
+    private static void OnError(int line, string message)
+    {
+        PrintError(line, "", message);
+    }
+
+    private static void PrintError(int line, string where, string message)
+    {
+        Console.WriteLine($"[line {line}] Error{where}: {message}");
+        hadError = true;
     }
 }
