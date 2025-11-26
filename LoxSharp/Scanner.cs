@@ -45,9 +45,11 @@ class Scanner
             case '+': AddToken(TokenType.Plus); break;
             case ';': AddToken(TokenType.Semicolon); break;
             case '*': AddToken(TokenType.Star); break;
-            default:
-                // skip it
-                break;
+            case '!': AddToken(Match('=') ? TokenType.BangEqual : TokenType.Bang); break;
+            case '=': AddToken(Match('=') ? TokenType.EqualEqual : TokenType.Equal); break;
+            case '<': AddToken(Match('=') ? TokenType.LessEqual : TokenType.Less); break;
+            case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;
+            default: /* skip it */ break;
         }
     }
 
@@ -60,11 +62,51 @@ class Scanner
         });
     }
 
+    /// <summary>
+    /// Return the current character and advance to the next one.
+    /// </summary>
+    /// <returns>The current character</returns>
     private char Advance()
     {
         return _source[_current++];
     }
 
+    /// <summary>
+    /// Peek at the current character without advancing.
+    /// </summary>
+    /// <returns>The current character</returns>
+    private char Peek()
+    {
+        return _source[_current];
+    }
+
+    /// <summary>
+    /// Checks if the current character is the specified one, and if so, advance.
+    /// </summary>
+    /// <param name="expectedChar">The expected character</param>
+    /// <returns>true, iff the current character was the expected one</returns>
+    private bool Match(char expectedChar)
+    {
+        if (IsAtEnd())
+            return false;
+
+        if (expectedChar != Peek())
+            return false;
+
+        // the current character is equal to c
+
+        // advance
+        _current++;
+
+        // the character matched the expected one
+        return true;
+
+    }
+
+    /// <summary>
+    /// Check if the stream has ended.
+    /// </summary>
+    /// <returns>true iff the stream has ended</returns>
     private bool IsAtEnd()
     {
         return _current >= _source.Length;
