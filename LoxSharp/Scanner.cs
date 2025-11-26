@@ -49,6 +49,17 @@ class Scanner
             case '=': AddToken(Match('=') ? TokenType.EqualEqual : TokenType.Equal); break;
             case '<': AddToken(Match('=') ? TokenType.LessEqual : TokenType.Less); break;
             case '>': AddToken(Match('=') ? TokenType.GreaterEqual : TokenType.Greater); break;
+            case '/':
+                if (Match('/'))
+                {
+                    while (!IsAtEnd() && Peek() != '\n')
+                        Advance();
+                }
+                else
+                {
+                    AddToken(TokenType.Slash);
+                }
+                break;
             default: /* skip it */ break;
         }
     }
@@ -93,12 +104,11 @@ class Scanner
         if (expectedChar != Peek())
             return false;
 
-        // the current character is equal to c
+        // The current character is equal to c.
+        // Consume it
+        Advance();
 
-        // advance
-        _current++;
-
-        // the character matched the expected one
+        // The character matched the expected one
         return true;
 
     }
