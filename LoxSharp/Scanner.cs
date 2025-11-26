@@ -60,7 +60,20 @@ class Scanner
                     AddToken(TokenType.Slash);
                 }
                 break;
-            default: /* skip it */ break;
+
+            case ' ':
+            case '\r':
+            case '\t':
+                // ignore whitespace
+                break;
+
+            case '\n':
+                _line++;
+                break;
+
+            default:
+                // ignore unrecognized character
+                break;
         }
     }
 
