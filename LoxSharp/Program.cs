@@ -71,7 +71,12 @@ static class Program
 
     private static ExitCode Run(string source)
     {
-        Console.WriteLine(source);
+        Scanner scanner = new(source);
+        List<Token> tokens = scanner.ScanTokens();
+        foreach (Token token in tokens)
+        {
+            Console.WriteLine(token);
+        }
         return ExitCode.Ok;
     }
 
