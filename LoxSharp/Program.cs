@@ -1,7 +1,7 @@
 ﻿
 namespace LoxSharp;
 
-class Program
+static class Program
 {
     // Exit codes that the program returns and their ordinal values.
     enum ExitCode
