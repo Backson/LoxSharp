@@ -180,7 +180,7 @@ public class Scanner
     /// <returns>The current character</returns>
     private char Peek()
     {
-        return _source[_current];
+        return IsAtEnd() ? '\0' : _source[_current];
     }
 
     /// <summary>
