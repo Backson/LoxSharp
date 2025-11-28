@@ -1,6 +1,6 @@
-﻿namespace LoxSharp;
+﻿namespace LoxSharp.Core;
 
-enum TokenType
+public enum TokenType
 {
     // single character tokens
     LeftParen,

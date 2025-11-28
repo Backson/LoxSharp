@@ -1,10 +1,10 @@
-﻿using LoxSharp.Ast;
+﻿using LoxSharp.Core.Ast;
 
-namespace LoxSharp;
+namespace LoxSharp.Core;
 
-class Parser
+public class Parser
 {
-    internal class ParseException : Exception
+    public class ParseException : Exception
     {
         public Token? Token { get; init; }
         public ParseException() { }

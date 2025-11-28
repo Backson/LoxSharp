@@ -1,6 +1,6 @@
-﻿namespace LoxSharp.Ast;
+﻿namespace LoxSharp.Core.Ast;
 
-class PrettyPrinter : IExpressionVisitor<string>
+public class PrettyPrinter : IExpressionVisitor<string>
 {
     public string Visit(BinaryExpression expr)
     {

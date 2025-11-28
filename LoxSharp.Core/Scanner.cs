@@ -1,6 +1,6 @@
-﻿namespace LoxSharp;
+﻿namespace LoxSharp.Core;
 
-class Scanner
+public class Scanner
 {
     private string _source = "";
     private List<Token> _tokens = [];

@@ -16,4 +16,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LoxSharp.Core\LoxSharp.Core.csproj" />
+  </ItemGroup>
+
 </Project>

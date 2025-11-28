@@ -1,6 +1,6 @@
-﻿namespace LoxSharp.Ast;
+﻿namespace LoxSharp.Core.Ast;
 
-interface IExpressionVisitor<T>
+public interface IExpressionVisitor<T>
 {
     T Visit(BinaryExpression expr);
     T Visit(UnaryExpression expr);
@@ -8,13 +8,13 @@ interface IExpressionVisitor<T>
     T Visit(LiteralExpression expr);
 }
 
-abstract class Expression
+public abstract class Expression
 {
     // Visitor pattern
     public abstract T Accept<T>(IExpressionVisitor<T> visitor);
 }
 
-class BinaryExpression : Expression
+public class BinaryExpression : Expression
 {
     public required Expression Left { get; init; }
     public required Token Operator { get; init; }
@@ -26,7 +26,7 @@ class BinaryExpression : Expression
     }
 }
 
-class UnaryExpression : Expression
+public class UnaryExpression : Expression
 {
     public required Token Operator { get; init; }
     public required Expression Child { get; init; }
@@ -37,7 +37,7 @@ class UnaryExpression : Expression
     }
 }
 
-class GroupingExpression : Expression
+public class GroupingExpression : Expression
 {
     public required Expression Child { get; init; }
 
@@ -47,7 +47,7 @@ class GroupingExpression : Expression
     }
 }
 
-class LiteralExpression : Expression
+public class LiteralExpression : Expression
 {
     public required Token Value { get; init; }
 

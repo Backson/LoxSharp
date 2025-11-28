@@ -1,6 +1,6 @@
-﻿namespace LoxSharp;
+﻿namespace LoxSharp.Core;
 
-class Token
+public class Token
 {
     public TokenType Type { get; }
     public string Text { get; init; } = string.Empty;
