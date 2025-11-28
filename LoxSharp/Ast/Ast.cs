@@ -4,7 +4,7 @@ interface IExpressionVisitor<T>
 {
     T Visit(BinaryExpression expr);
     T Visit(UnaryExpression expr);
-    T Visit(GroupedExpression expr);
+    T Visit(GroupingExpression expr);
     T Visit(LiteralExpression expr);
 }
 
@@ -37,7 +37,7 @@ class UnaryExpression : Expression
     }
 }
 
-class GroupedExpression : Expression
+class GroupingExpression : Expression
 {
     public required Expression Child { get; init; }
 
