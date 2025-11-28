@@ -2,10 +2,10 @@
 
 interface IExpressionVisitor<T>
 {
-    T VisitBinaryExpression(BinaryExpression expr);
-    T VisitUnaryExpression(UnaryExpression expr);
-    T VisitGroupedExpression(GroupedExpression expr);
-    T VisitLiteralExpression(LiteralExpression expr);
+    T Visit(BinaryExpression expr);
+    T Visit(UnaryExpression expr);
+    T Visit(GroupedExpression expr);
+    T Visit(LiteralExpression expr);
 }
 
 abstract class Expression
@@ -22,7 +22,7 @@ class BinaryExpression : Expression
 
     public override T Accept<T>(IExpressionVisitor<T> visitor)
     {
-        return visitor.VisitBinaryExpression(this);
+        return visitor.Visit(this);
     }
 }
 
@@ -33,7 +33,7 @@ class UnaryExpression : Expression
 
     public override T Accept<T>(IExpressionVisitor<T> visitor)
     {
-        return visitor.VisitUnaryExpression(this);
+        return visitor.Visit(this);
     }
 }
 
@@ -43,7 +43,7 @@ class GroupedExpression : Expression
 
     public override T Accept<T>(IExpressionVisitor<T> visitor)
     {
-        return visitor.VisitGroupedExpression(this);
+        return visitor.Visit(this);
     }
 }
 
@@ -53,6 +53,6 @@ class LiteralExpression : Expression
 
     public override T Accept<T>(IExpressionVisitor<T> visitor)
     {
-        return visitor.VisitLiteralExpression(this);
+        return visitor.Visit(this);
     }
 }

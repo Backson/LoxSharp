@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LoxSharp.Ast;
+﻿namespace LoxSharp.Ast;
 
 class PrettyPrinter : IExpressionVisitor<string>
 {
-    public string VisitBinaryExpression(BinaryExpression expr)
+    public string Visit(BinaryExpression expr)
     {
         string op = expr.Operator.Text;
         string left = expr.Left.Accept(this);
@@ -14,18 +10,18 @@ class PrettyPrinter : IExpressionVisitor<string>
         return $"({op} {left} {right})";
     }
 
-    public string VisitGroupedExpression(GroupedExpression expr)
+    public string Visit(GroupedExpression expr)
     {
         string child = expr.Child.Accept(this);
         return $"(group {child})";
     }
 
-    public string VisitLiteralExpression(LiteralExpression expr)
+    public string Visit(LiteralExpression expr)
     {
         return expr.Value.Text;
     }
 
-    public string VisitUnaryExpression(UnaryExpression expr)
+    public string Visit(UnaryExpression expr)
     {
         string op = expr.Operator.Text;
         string child = expr.Child.Accept(this);
