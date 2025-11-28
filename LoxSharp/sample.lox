@@ -2,7 +2,7 @@ fun sum(a, b) {
     return a + b;
 }
 
-print "Hello, World!"
+print "Hello, World!";
 
 var foo = 5;
 var bar = 10;

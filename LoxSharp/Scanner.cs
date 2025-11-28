@@ -9,6 +9,27 @@ class Scanner
     private int _current = 0;
     private int _line = 1;
 
+    // maps keyword strings to the resulting token type
+    private readonly Dictionary<string, TokenType> _keywords = new()
+    {
+        ["and"] = TokenType.And,
+        ["class"] = TokenType.Class,
+        ["else"] = TokenType.Else,
+        ["false"] = TokenType.False,
+        ["for"] = TokenType.For,
+        ["fun"] = TokenType.Fun,
+        ["if"] = TokenType.If,
+        ["nil"] = TokenType.Nil,
+        ["or"] = TokenType.Or,
+        ["print"] = TokenType.Print,
+        ["return"] = TokenType.Return,
+        ["super"] = TokenType.Super,
+        ["this"] = TokenType.This,
+        ["true"] = TokenType.True,
+        ["var"] = TokenType.Var,
+        ["while"] = TokenType.While,
+    };
+
     public Scanner(string source)
     {
         _source = source;
@@ -111,6 +132,22 @@ class Scanner
 
                     AddToken(TokenType.Number);
                 }
+                else if (IsAlpha(startingCharacter))
+                {
+                    // identifier or keyword
+                    while (IsAlphaNumeric(Peek()))
+                        Advance();
+
+                    string text = _source[_start.._current];
+                    if (_keywords.TryGetValue(text, out TokenType tokenType))
+                    {
+                        AddToken(tokenType);
+                    }
+                    else
+                    {
+                        AddToken(TokenType.Identifier);
+                    }
+                }
                 else
                 {
                     // ignore unrecognized character
@@ -172,6 +209,18 @@ class Scanner
         return c >= '0' && c <= '9';
     }
 
+    private static bool IsAlpha(char c)
+    {
+        return (c >= 'a' && c <= 'z') ||
+            (c >= 'A' && c <= 'Z') ||
+            c == '_';
+    }
+
+    private static bool IsAlphaNumeric(char c)
+    {
+        return IsAlpha(c) || IsDigit(c);
+    }
+
     /// <summary>
     /// Check if the stream has ended.
     /// </summary>
@@ -180,5 +229,4 @@ class Scanner
     {
         return _current >= _source.Length;
     }
-
 }
