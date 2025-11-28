@@ -2,7 +2,7 @@
   "profiles": {
     "LoxSharp": {
       "commandName": "Project",
-      "commandLineArgs": "sample.lox"
+      "commandLineArgs": "samples\\expression.lox"
     }
   }
 }

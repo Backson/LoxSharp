@@ -1,4 +1,5 @@
-﻿
+﻿using LoxSharp.Ast;
+
 namespace LoxSharp;
 
 static class Program
@@ -71,18 +72,33 @@ static class Program
 
     private static ExitCode Run(string source)
     {
-        Scanner scanner = new(source);
-        List<Token> tokens = scanner.ScanTokens();
-        foreach (Token token in tokens)
+        try
         {
-            Console.WriteLine(token);
+            Scanner scanner = new(source);
+            List<Token> tokens = scanner.ScanTokens();
+            Parser parser = new(tokens);
+            Expression expression = parser.Parse();
+            string str = expression.Accept(new PrettyPrinter());
+            Console.WriteLine(str);
         }
-        return ExitCode.Ok;
-    }
+        catch (Parser.ParseException ex)
+        {
+            if (ex.Token == null)
+            {
+                PrintError(0, "", ex.Message);
+            }
+            else if (ex.Token.Type == TokenType.EOF)
+            {
+                PrintError(ex.Token.Line, " at end", ex.Message);
+            }
+            else
+            {
+                PrintError(ex.Token.Line, $" at '{ex.Token.Text}'", ex.Message);
+            }
+            return ExitCode.SyntaxError;
+        }
 
-    private static void OnError(int line, string message)
-    {
-        PrintError(line, "", message);
+        return ExitCode.Ok;
     }
 
     private static void PrintError(int line, string where, string message)

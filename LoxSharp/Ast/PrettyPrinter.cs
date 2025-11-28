@@ -10,7 +10,7 @@ class PrettyPrinter : IExpressionVisitor<string>
         return $"({op} {left} {right})";
     }
 
-    public string Visit(GroupedExpression expr)
+    public string Visit(GroupingExpression expr)
     {
         string child = expr.Child.Accept(this);
         return $"(group {child})";

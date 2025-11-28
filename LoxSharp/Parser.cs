@@ -4,7 +4,7 @@ namespace LoxSharp;
 
 class Parser
 {
-    class ParseException : Exception
+    internal class ParseException : Exception
     {
         public Token? Token { get; init; }
         public ParseException() { }
@@ -18,6 +18,11 @@ class Parser
     public Parser(List<Token> tokens)
     {
         _tokens = tokens;
+    }
+
+    public Expression Parse()
+    {
+        return ParseExpression();
     }
 
     private Expression ParseExpression()
