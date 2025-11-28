@@ -6,5 +6,6 @@
     <File Path="README.md" />
   </Folder>
   <Project Path="LoxSharp.Core/LoxSharp.Core.csproj" Id="f4ff2504-49fb-452c-a01d-2744a12ef25b" />
+  <Project Path="LoxSharp.Tests/LoxSharp.Tests.csproj" Id="5b1616b8-4af8-4149-a895-421e7f063432" />
   <Project Path="LoxSharp/LoxSharp.csproj" />
 </Solution>
