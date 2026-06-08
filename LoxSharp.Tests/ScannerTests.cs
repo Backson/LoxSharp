@@ -1,5 +1,3 @@
-using System.Linq;
-using Xunit;
 using LoxSharp.Core;
 
 namespace LoxSharp.Tests;
