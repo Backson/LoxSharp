@@ -1,6 +1,4 @@
-﻿using LoxSharp.Core.Ast;
-
-namespace LoxSharp.Core;
+﻿namespace LoxSharp.Core;
 
 public class Parser
 {

@@ -1,4 +1,4 @@
-﻿namespace LoxSharp.Core.Ast;
+﻿namespace LoxSharp.Core;
 
 public class PrettyPrinter : IExpressionVisitor<string>
 {
